@@ -1,0 +1,20 @@
+{% block title %}{{ title }}{% endblock %}
+
+<p>Make request to {{ request }}</p>
+
+<h4>Current Exchange Rates:</h4>
+<ul>
+    {% for key, rate in rates %}
+
+        <li>{{ key }}: {{ rate }}</li>
+
+    {% endfor %}
+</ul>
+
+<h2>Convert UAH to other currencies:</h2>
+
+    {% for key, rate in rates %}
+
+        <form><input type="text" name="{{ key }}" class="{{ key }}" placeholder="{{ key }}"></p><div class="result-{{ key }}"></div></form>
+
+    {% endfor %}
