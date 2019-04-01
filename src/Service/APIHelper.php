@@ -6,22 +6,38 @@ class APIHelper {
 
     private $API;
 
-    public $USD;
+    private $currencies;
 
-    public $EUR;
+    public $rates;
 
-    public function __construct($API){
+    public function __construct($API, $currencies, $rates = []){
         $this->API = $API;
 
-        $this->USD = number_format((float)$this->getRates()[0]->buy, 2, '.', '');
+        $this->currencies = explode(",",$currencies);
 
-        $this->EUR = number_format((float)$this->getRates()[1]->buy, 2, '.', '');
+        foreach ($this->currencies as $cur){
+          foreach ($this->fetchRates() as $rateArr){
+            if ($rateArr->ccy == $cur){
+              $rates = $rates + [$rateArr->ccy => $rateArr->buy];
+            }
+          }
+          if (!array_key_exists($cur, $rates)){
+            $rates = $rates + [$cur => 'No information available.'];
+          }
+        }
+
+        foreach ($rates as $cur => $rate){
+          if (is_numeric($rate)){
+            $rates[$cur] = number_format((float)$rate, 2, '.', '');
+          }
+        }
+        $this->rates = $rates;
     }
 
-    private function getRates() {
+    private function fetchRates() {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->API);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: application/json']);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $response = curl_exec($ch);
@@ -30,8 +46,11 @@ class APIHelper {
 
     }
 
-    public function convert(int $val) {
-        return ['USD' => $val * $this->USD,
-            'EUR' => $val * $this->EUR];
+    public function convert(int $val, string $cur) {
+      if (!in_array($cur, $this->currencies)){
+        throw new \Exception("Uknown currency");
+      }
+      return number_format((float)$val / $this->rates[$cur], 2, '.', '');
     }
+
 }

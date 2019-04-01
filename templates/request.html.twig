@@ -1,20 +1,108 @@
-{% block title %}{{ title }}{% endblock %}
+{% block title %}<h2 class="{{ slug }}">{{ title }}<h2>{% endblock %}
 
-<p>Make request to {{ request }}</p>
 
 <h4>Current Exchange Rates:</h4>
-<ul>
+<ul class="curList">
     {% for key, rate in rates %}
 
-        <li>{{ key }}: {{ rate }}</li>
+        <li class="cur" id="{{ key }}">{{ key }}: {{ rate }}</li>
 
     {% endfor %}
 </ul>
-
-<h2>Convert UAH to other currencies:</h2>
+<p>Convert <input class="convertVal" type="text" name="val" placeholder="1"> UAH to
+  <select class="cur" name="cur">
 
     {% for key, rate in rates %}
 
-        <form><input type="text" name="{{ key }}" class="{{ key }}" placeholder="{{ key }}"></p><div class="result-{{ key }}"></div></form>
+        <option value="{{ key }}">{{ key }}</option>
 
     {% endfor %}
+  </select> :
+<div class="result"></div>
+<script>
+
+
+function convertCur(){
+  var input = $(".convertVal").val();
+  var cur = $( ".cur option:selected" ).text();
+  if (!$.isNumeric(input)){
+    $(".result").html('');
+    $('.result').append("Please enter a number");
+    return false;
+  }
+  if ($("#" + cur)){
+    var rate = $("#" + cur).text().split(": ")[1];
+    if (!$.isNumeric(rate)){
+      $(".result").html('');
+      $('.result').append("Something wrong with the exchange rate value for this currency. Please try again later.");
+      return false;
+    }
+  } else {
+    $(".result").html('');
+    $('.result').append("And error occured while converting the value.");
+    return false;
+  }
+  var result = Number.parseFloat(input / rate).toFixed(2);
+  $(".result").html('');
+  $('.result').append(result);
+  return true;
+}
+
+
+
+clearInterval(ratesAjax);
+
+var source = $('h2').attr('class');
+
+$('.convertVal').keyup(function(){
+  convertCur();
+});
+
+$(".cur").change(function() {
+  convertCur();
+});
+
+
+getRates();
+
+var ratesAjax = setInterval(function() {
+  getRates();
+}, 5000);
+
+function getRates() {
+  $.ajax({
+    url: '/api?rates=' + source,
+    success: function(data) {
+      updateRates(data);
+      return true;
+    },
+    error: function(){
+      console.log('Error fetching currency data. Please check the logs.');
+      return false;
+    }
+  });
+}
+
+function updateRates(rates){
+    for (var key in rates) {
+        var value = key + ': ' + rates[key];
+        var curClass = '#' + key;
+        if ($(curClass)[0]){
+          $(curClass).html('');
+          $(curClass).append(value);
+        } else {
+          if (rates[key]){
+            var newCur = '<li id="' + key + '" class="cur">' + key + ": " + rates[key] + "</li>";
+            $('.curList').append(newCur);
+            $('select').append('<option value="' + key + ' ">' + key + '</option>');
+          } else {
+            var newCur = '<li id="' + key + '">' + key + ": Error occured while fetching the value. Check if it exists on source</li>";
+            $('.curList').append(newCur);
+          }
+        }
+    }
+    return true;
+}
+
+
+</script>

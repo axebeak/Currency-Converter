@@ -4,18 +4,28 @@ namespace App\Service;
 
 class FileHelper {
 
-    public $USD;
+    private $currencies;
 
-    public $EUR;
+    public $rates;
 
-    public function __construct($USD, $EUR){
-        $this->USD = $USD;
+    public function __construct($currencies, $rates = []){
+        $this->currencies = explode(",",$currencies);
 
-        $this->EUR = $EUR;
+        foreach ($this->currencies as $cur){
+          if (getenv($cur)){
+            $array = [$cur => getenv($cur)];
+            $rates = $rates + $array;
+          } else {
+            throw new \Exception("Value for the '".$cur."' currency not found.");
+          }
+        }
+        $this->rates = $rates;
     }
 
-    public function convert(int $val){
-        return ['USD' => $val * $this->USD,
-            'EUR' => $val * $this->EUR];
+    public function convert(int $val, string $cur) {
+      if (!in_array($cur, $this->currencies)){
+        throw new \Exception("Uknown currency");
+      }
+      return number_format((float)$val / $this->rates[$cur], 2, '.', '');
     }
 }

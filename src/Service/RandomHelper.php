@@ -10,31 +10,35 @@ class RandomHelper {
 
     private $response;
 
-    public $USD;
+    private $currencies;
 
-    public $EUR;
+    public $rates;
 
-    public function __construct(){
+    public function __construct($rates = [], $currencies){
         $this->response = new Response;
+
+        $this->currencies = explode(",",$currencies);
 
         $request = Request::createFromGlobals();
 
         if ($request->cookies->has('rates')){
-          $result = json_decode($request->cookies->get('rates'));
+          $rateArray = json_decode($request->cookies->get('rates'));
           if (json_last_error() === JSON_ERROR_NONE) {
-                if (isset($result->USD) and is_numeric($result->USD)){
-                  $this->USD = $result->USD;
-                }
-                if (isset($result->EUR) and is_numeric($result->USD)){
-                  $this->EUR = $result->EUR;
-                }
+            foreach ($rateArray as $cur => $rate){
+              if (is_numeric($rate) and in_array($cur, $this->currencies)){
+                $rates = $rates + [$cur => $rate];
+              }
+            }
           }
+          $this->rates = $rates;
         }
-        if (!isset($this->USD)){
-          $this->USD = rand(5*100, 50*100)/100;
-        }
-        if (!isset($this->EUR)){
-          $this->EUR = rand(10*100, 60*100)/100;
+        if (!isset($this->rates)){
+          $this->rates = [];
+          foreach ($this->currencies as $cur){
+            $val = rand(5*100, 50*100)/100;
+            $item = [$cur => $val];
+            $this->rates = $this->rates + $item;
+          }
         }
         if (!$request->cookies->has('rates')){
           $this->setRatesCookie();
@@ -42,14 +46,16 @@ class RandomHelper {
     }
 
     public function setRatesCookie(){
-      $cookie = $cookie = new Cookie('rates', json_encode(['USD' => $this->USD, 'EUR' => $this->EUR]), strtotime('now + 30 seconds'));
+      $cookie = new Cookie('rates', json_encode($this->rates), strtotime('now + 15 seconds'));
       $this->response->headers->setCookie($cookie);
       $this->response->send();
       return true;
     }
 
-    public function convert(int $val) {
-        return ['USD' => $val * $this->USD,
-            'EUR' => $val * $this->EUR];
+    public function convert(int $val, string $cur) {
+      if (!in_array($cur, $this->currencies)){
+        throw new \Exception("Uknown currency");
+      }
+      return number_format((float)$val / $this->rates[$cur], 2, '.', '');
     }
 }

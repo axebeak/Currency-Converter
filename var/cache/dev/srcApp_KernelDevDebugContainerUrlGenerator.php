@@ -21,6 +21,8 @@ class srcApp_KernelDevDebugContainerUrlGenerator extends Symfony\Component\Routi
         if (null === self::$declaredRoutes) {
             self::$declaredRoutes = [
         '_twig_error_test' => [['code', '_format'], ['_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], []],
+        'app_main_showdefault' => [[], ['_controller' => 'App\\Controller\\MainController::showDefault'], [], [['text', '/']], [], []],
+        'app_main_endpoint' => [[], ['_controller' => 'App\\Controller\\MainController::endpoint'], [], [['text', '/api']], [], []],
     ];
         }
     }

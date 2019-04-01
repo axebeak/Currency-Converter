@@ -28,7 +28,6 @@ class __TwigTemplate_c9df2e9978f6e056476ebe808e5e6b90fab81ee450f5098fc6ada78ec4b
         $this->blocks = [
             'title' => [$this, 'block_title'],
             'stylesheets' => [$this, 'block_stylesheets'],
-            'body' => [$this, 'block_body'],
             'javascripts' => [$this, 'block_javascripts'],
         ];
     }
@@ -50,16 +49,29 @@ class __TwigTemplate_c9df2e9978f6e056476ebe808e5e6b90fab81ee450f5098fc6ada78ec4b
         ";
         // line 6
         $this->displayBlock('stylesheets', $context, $blocks);
-        // line 7
+        // line 11
         echo "    </head>
     <body>
+      <header class=\"col\">
+        <nav class=\"row navbar bg-light\">
+          <li id=\"home-item\" class=\"nav-item\"><a class=\"navbar-brand\" href=\"javascript:void(0)\"><i class=\"fas fa-home\"></i> Home</a></li>
+          <li id=\"local-file-item\" class=\"nav-item\"><a class=\"nav-link\" href=\"javascript:void(0)\">Local File</a></li>
+          <li id=\"external-api-item\" class=\"nav-item\"><a class=\"nav-link\" href=\"javascript:void(0)\">External API</a></li>
+          <li id=\"random-item\" class=\"nav-item\"><a class=\"nav-link\" href=\"javascript:void(0)\">Random</a></li>
+          <li id=\"settings-item\" class=\"nav-item\"><a class=\"navbar-brand\" href=\"javascript:void(0)\"><i class=\"fas fa-cog\"></i> Settings</a></li>
+        </nav>
+        <span class=\"row selector\"></div>
+      </header>
+      <main class=\"container\">
+      <div class=\"lds-ring\"><div></div><div></div><div></div><div></div></div>
+      <div id=\"main\">
+        Currency converter. Please select an option above;
+      </div>
+      </main>
         ";
-        // line 9
-        $this->displayBlock('body', $context, $blocks);
-        // line 10
-        echo "        ";
+        // line 29
         $this->displayBlock('javascripts', $context, $blocks);
-        // line 11
+        // line 33
         echo "    </body>
 </html>
 ";
@@ -74,7 +86,7 @@ class __TwigTemplate_c9df2e9978f6e056476ebe808e5e6b90fab81ee450f5098fc6ada78ec4b
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "title"));
 
-        echo "Welcome!";
+        echo "Currency Converter";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
 
@@ -86,28 +98,26 @@ class __TwigTemplate_c9df2e9978f6e056476ebe808e5e6b90fab81ee450f5098fc6ada78ec4b
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "stylesheets"));
 
+        // line 7
+        echo "          <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">
+          <link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.8.1/css/all.css\" integrity=\"sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf\" crossorigin=\"anonymous\">
+          <link rel=\"stylesheet\" href=\"css/style.css\">
+        ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
 
     }
 
-    // line 9
-    public function block_body($context, array $blocks = [])
-    {
-        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
-        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
-
-        
-        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
-
-    }
-
-    // line 10
+    // line 29
     public function block_javascripts($context, array $blocks = [])
     {
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "javascripts"));
 
+        // line 30
+        echo "           <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>
+           <script src=\"js/script.js\"></script>
+        ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
 
@@ -120,7 +130,7 @@ class __TwigTemplate_c9df2e9978f6e056476ebe808e5e6b90fab81ee450f5098fc6ada78ec4b
 
     public function getDebugInfo()
     {
-        return array (  106 => 10,  95 => 9,  84 => 6,  72 => 5,  63 => 11,  60 => 10,  58 => 9,  54 => 7,  52 => 6,  48 => 5,  42 => 1,);
+        return array (  118 => 30,  112 => 29,  102 => 7,  96 => 6,  84 => 5,  75 => 33,  73 => 29,  53 => 11,  51 => 6,  47 => 5,  41 => 1,);
     }
 
     public function getSourceContext()
@@ -129,12 +139,34 @@ class __TwigTemplate_c9df2e9978f6e056476ebe808e5e6b90fab81ee450f5098fc6ada78ec4b
 <html>
     <head>
         <meta charset=\"UTF-8\">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Currency Converter{% endblock %}</title>
+        {% block stylesheets %}
+          <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">
+          <link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.8.1/css/all.css\" integrity=\"sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf\" crossorigin=\"anonymous\">
+          <link rel=\"stylesheet\" href=\"css/style.css\">
+        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+      <header class=\"col\">
+        <nav class=\"row navbar bg-light\">
+          <li id=\"home-item\" class=\"nav-item\"><a class=\"navbar-brand\" href=\"javascript:void(0)\"><i class=\"fas fa-home\"></i> Home</a></li>
+          <li id=\"local-file-item\" class=\"nav-item\"><a class=\"nav-link\" href=\"javascript:void(0)\">Local File</a></li>
+          <li id=\"external-api-item\" class=\"nav-item\"><a class=\"nav-link\" href=\"javascript:void(0)\">External API</a></li>
+          <li id=\"random-item\" class=\"nav-item\"><a class=\"nav-link\" href=\"javascript:void(0)\">Random</a></li>
+          <li id=\"settings-item\" class=\"nav-item\"><a class=\"navbar-brand\" href=\"javascript:void(0)\"><i class=\"fas fa-cog\"></i> Settings</a></li>
+        </nav>
+        <span class=\"row selector\"></div>
+      </header>
+      <main class=\"container\">
+      <div class=\"lds-ring\"><div></div><div></div><div></div><div></div></div>
+      <div id=\"main\">
+        Currency converter. Please select an option above;
+      </div>
+      </main>
+        {% block javascripts %}
+           <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>
+           <script src=\"js/script.js\"></script>
+        {% endblock %}
     </body>
 </html>
 ", "base.html.twig", "C:\\xampp\\htdocs\\converter\\templates\\base.html.twig");

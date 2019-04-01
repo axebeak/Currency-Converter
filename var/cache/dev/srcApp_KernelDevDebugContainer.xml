@@ -78,18 +78,22 @@
       <argument type="service" id="App\Service\FileHelper"/>
       <argument type="service" id="App\Service\APIHelper"/>
       <argument type="service" id="App\Service\RandomHelper"/>
+      <argument>%env(CURRENCIES)%</argument>
       <call method="setContainer">
         <argument type="service" id=".service_locator.KTVqfp6.App\Controller\MainController"/>
       </call>
     </service>
     <service id="App\Service\APIHelper" class="App\Service\APIHelper" autowire="true" autoconfigure="true">
-      <argument>https://api.privatbank.ua/p24api/pubinfo?json&amp;exchange&amp;coursid=5</argument>
+      <argument>%env(API_LINK)%</argument>
+      <argument>%env(CURRENCIES)%</argument>
     </service>
     <service id="App\Service\FileHelper" class="App\Service\FileHelper" autowire="true" autoconfigure="true">
-      <argument>27.09</argument>
-      <argument>30.48</argument>
+      <argument>%env(CURRENCIES)%</argument>
     </service>
-    <service id="App\Service\RandomHelper" class="App\Service\RandomHelper" autowire="true" autoconfigure="true"/>
+    <service id="App\Service\RandomHelper" class="App\Service\RandomHelper" autowire="true" autoconfigure="true">
+      <argument type="collection"/>
+      <argument>%env(CURRENCIES)%</argument>
+    </service>
     <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
       <argument type="service" id="kernel"/>

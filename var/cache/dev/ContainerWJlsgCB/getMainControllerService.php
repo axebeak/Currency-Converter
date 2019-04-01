@@ -13,7 +13,7 @@ include_once $this->targetDirs[3].'\\src\\Service\\FileHelper.php';
 include_once $this->targetDirs[3].'\\src\\Service\\APIHelper.php';
 include_once $this->targetDirs[3].'\\src\\Service\\RandomHelper.php';
 
-$this->services['App\Controller\MainController'] = $instance = new \App\Controller\MainController(new \App\Service\FileHelper(27.09, 30.48), new \App\Service\APIHelper('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'), new \App\Service\RandomHelper(($this->privates['parameter_bag'] ?? ($this->privates['parameter_bag'] = new \Symfony\Component\DependencyInjection\ParameterBag\ContainerBag($this)))));
+$this->services['App\Controller\MainController'] = $instance = new \App\Controller\MainController(new \App\Service\FileHelper($this->getEnv('CURRENCIES')), new \App\Service\APIHelper($this->getEnv('API_LINK'), $this->getEnv('CURRENCIES')), new \App\Service\RandomHelper([], $this->getEnv('CURRENCIES')), $this->getEnv('CURRENCIES'));
 
 $instance->setContainer((new \Symfony\Component\DependencyInjection\Argument\ServiceLocator($this->getService, [
     'http_kernel' => ['services', 'http_kernel', 'getHttpKernelService', false],
