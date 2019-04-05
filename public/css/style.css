@@ -1,3 +1,34 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400");
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display");
+
+body {
+    background-color:#0e182d;
+    color:#fafafa;
+    font-family: "Source Sans Pro", sans-serif;
+    overflow: hidden;
+    font-size:23px;
+}
+
+header {
+    padding-right:0px !important;
+}
+
+a {
+    color:#fafafa;
+}
+
+a:hover {
+    color:#f7911d;
+}
+
+.activeMenuItem a {
+    color:#f7911d;
+}
+
+nav {
+    background-color:#0e182d;
+}
+
 nav ul{
   display:inherit;
 }
@@ -7,9 +38,9 @@ li {
 }
 
 .selector {
-  background-color: blue;
+  background-color: #f7911d;
   width:50px;
-  height:2px;
+  height:1px;
   position: relative;
 }
 
@@ -17,22 +48,82 @@ main {
   margin-top:30px;
 }
 
-#convertVal {
-  width: 40px;
+h4 {
+    font-size:40px;
+    margin-top:20px;
+    margin-bottom:20px;
 }
 
-.result {
-  min-height:30px;
-  min-width: 100px;
-  border: 2px solid grey;
-  border-radius: 5px;
+#convertVal {
+  width: 40px;
 }
 
 .curList {
   display:inline-block;
 }
 
+select, .result, .convertVal {
+    width:200px;
+}
 
+input {
+  background: none;
+  color: #f7911d;
+  font-weight:bold;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 320px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #f7911d;
+}
+
+
+.converter {
+    background-color:#1a2235;
+    padding:10px 12px 12px 12px;
+    min-height:600px;
+    border-radius:1px;
+    box-shadow: 2px 6px 47px -2px #0e182d;
+    min-width:600px;
+}
+
+.m-more {
+    margin-top: 3.5rem !important;
+    margin-bottom: 3.5rem !important;
+}
+
+.output {
+    position: relative;
+}
+
+.settings-icon {
+    font-size:35px;
+    margin-left:550px;
+}
+
+.fa-times {
+	font-size: 30px;
+	margin-top: 12px;
+	margin-left: 6px;
+}
+
+.fa-times:hover {
+    color: #f7911d;
+}
+
+.fa-plus {
+    margin-top:17px;
+    margin-left:5px;
+}
+
+.fa-plus:hover {
+    color: #f7911d;
+}
+
+.upd {
+    width: 150px;
+}
 
 .lds-ring {
   display: none;

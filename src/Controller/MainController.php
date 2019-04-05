@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Exception;
 use App\Service\FileHelper;
 use App\Service\APIHelper;
 use App\Service\RandomHelper;
+use App\Service\SettingsHelper;
 
 
 class MainController extends AbstractController {
@@ -22,14 +23,17 @@ class MainController extends AbstractController {
     private $APIHelper;
 
     private $randomHelper;
+    
+    private $settingsHelper;
 
     private $currencies;
 
-    public function __construct(FileHelper $fileHelper, APIHelper $APIHelper, RandomHelper $randomHelper, $currencies){
+    public function __construct(FileHelper $fileHelper, APIHelper $APIHelper, RandomHelper $randomHelper, SettingsHelper $settingsHelper, $currencies){
         $this->currencies = explode(",",$currencies);
         $this->fileHelper = $fileHelper;
         $this->APIHelper = $APIHelper;
         $this->randomHelper = $randomHelper;
+        $this->settingsHelper = $settingsHelper;
     }
 
     /**
@@ -54,6 +58,13 @@ class MainController extends AbstractController {
         if ($request->query->has('val') && $request->query->has('cur') && $request->query->has('source')){
           return new JsonResponse($this->convert($request->get('val'), $request->get('cur'), $request->get('source')));
         }
+        if ($request->query->has('currencies')){
+            if ($this->createCur($request->get('currencies'))){
+                return new JsonResponse(["success" => true]);
+            } else {
+                throw new \Exception("Error processing the request. Please check the logs.");
+            }
+        }
         throw new \Exception("Uknown parameters.");
     }
 
@@ -71,6 +82,11 @@ class MainController extends AbstractController {
                 $title = 'Random Values';
                 $rates = $this->randomHelper->rates;
                 break;
+            case 'settings':
+                return $this->render('settings.html.twig', [
+                    'title' => 'Settings',
+                    'currencies' => $this->currencies,
+                    'rates' => $this->fileHelper->rates]);
             default:
                 throw new \Exception("'".$slug."' link not found, please use one of the following: 'local-file', 'external-api' or 'random'");
         }
@@ -93,7 +109,15 @@ class MainController extends AbstractController {
               throw new \Exception("Provided source for currency exchange not found. Please use 'local', 'api', or 'random'.");
       }
     }
-
+    
+    public function createCur(string $cur){
+        $curArray = json_decode($cur, true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return $this->settingsHelper->initiate($curArray);
+        }
+        return false;
+    }
+    
     public function convert(int $val, string $cur, string $source){
         switch ($source){
             case 'local-file':

@@ -32,3 +32,7 @@ services:
     App\Service\APIHelper:
         bind:
             $API: '%env(API_LINK)%'
+    
+    App\Service\SettingsHelper:
+        bind:
+            $ENV: "%kernel.project_dir%/.env"

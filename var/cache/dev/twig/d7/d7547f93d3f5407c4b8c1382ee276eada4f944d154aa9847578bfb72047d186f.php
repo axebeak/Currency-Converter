@@ -36,21 +36,23 @@ class __TwigTemplate_c17472e473fa74b54a0072c277c142d82c388e314bb336d330e5c9fcad6
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "request.html.twig"));
 
         // line 1
+        echo " ";
         $this->displayBlock('title', $context, $blocks);
         // line 2
         echo "
-
-<h4>Current Exchange Rates:</h4>
-<ul class=\"curList\">
-    ";
-        // line 6
+<div class=\"container row\">
+    <div class=\"col\">
+    <h4>Current Exchange Rates:</h4>
+    <ul class=\"curList\">
+        ";
+        // line 7
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable((isset($context["rates"]) || array_key_exists("rates", $context) ? $context["rates"] : (function () { throw new RuntimeError('Variable "rates" does not exist.', 6, $this->source); })()));
+        $context['_seq'] = twig_ensure_traversable((isset($context["rates"]) || array_key_exists("rates", $context) ? $context["rates"] : (function () { throw new RuntimeError('Variable "rates" does not exist.', 7, $this->source); })()));
         foreach ($context['_seq'] as $context["key"] => $context["rate"]) {
-            // line 7
-            echo "
-        <li class=\"cur\" id=\"";
             // line 8
+            echo "
+            <li class=\"cur\" id=\"";
+            // line 9
             echo twig_escape_filter($this->env, $context["key"], "html", null, true);
             echo "\">";
             echo twig_escape_filter($this->env, $context["key"], "html", null, true);
@@ -58,125 +60,89 @@ class __TwigTemplate_c17472e473fa74b54a0072c277c142d82c388e314bb336d330e5c9fcad6
             echo twig_escape_filter($this->env, $context["rate"], "html", null, true);
             echo "</li>
 
-    ";
+        ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['key'], $context['rate'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 11
-        echo "</ul>
-<p>Convert <input class=\"convertVal\" type=\"text\" name=\"val\" placeholder=\"1\"> UAH to
-  <select class=\"cur\" name=\"cur\">
+        // line 12
+        echo "    </ul>
+    </div>
 
-    ";
-        // line 15
+    <div class=\"col converter text-center\">
+        <h4>Converter</h4> 
+        <div class=\"row\">
+            <div class=\"col\">
+            <div class=\"m-more\">
+            <div><em>The currency I want to convert:</em></div>
+            <select class=\"toConvert\" name=\"cur\">
+                <option value=\"UAH\">UAH</option>
+
+
+                ";
+        // line 25
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable((isset($context["rates"]) || array_key_exists("rates", $context) ? $context["rates"] : (function () { throw new RuntimeError('Variable "rates" does not exist.', 15, $this->source); })()));
+        $context['_seq'] = twig_ensure_traversable((isset($context["rates"]) || array_key_exists("rates", $context) ? $context["rates"] : (function () { throw new RuntimeError('Variable "rates" does not exist.', 25, $this->source); })()));
         foreach ($context['_seq'] as $context["key"] => $context["rate"]) {
-            // line 16
+            // line 26
             echo "
-        <option value=\"";
-            // line 17
+                    <option value=\"";
+            // line 27
             echo twig_escape_filter($this->env, $context["key"], "html", null, true);
             echo "\">";
             echo twig_escape_filter($this->env, $context["key"], "html", null, true);
             echo "</option>
 
-    ";
+                ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['key'], $context['rate'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 20
-        echo "  </select> :
-<div class=\"result\"></div>
-<script>
+        // line 30
+        echo "            </select>
+            </div>
+            <div class=\"m-more\">
+            <div><em>Amount to convert:</em></div>
+            <div class=\"d-flex justify-content-center\"><input class=\"convertVal\" type=\"text\" name=\"val\" placeholder=\"100\"></div>
+            </div>
+        </div>
+        <div class=\"col\">
+            <div class=\"m-more\">
+            <div><em>The currency to convert into:</em></div>
+            <select class=\"cur\" name=\"cur\">
+                ";
+        // line 41
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable((isset($context["rates"]) || array_key_exists("rates", $context) ? $context["rates"] : (function () { throw new RuntimeError('Variable "rates" does not exist.', 41, $this->source); })()));
+        foreach ($context['_seq'] as $context["key"] => $context["rate"]) {
+            // line 42
+            echo "
+                    <option value=\"";
+            // line 43
+            echo twig_escape_filter($this->env, $context["key"], "html", null, true);
+            echo "\">";
+            echo twig_escape_filter($this->env, $context["key"], "html", null, true);
+            echo "</option>
 
-
-function convertCur(){
-  var input = \$(\".convertVal\").val();
-  var cur = \$( \".cur option:selected\" ).text();
-  if (!\$.isNumeric(input)){
-    \$(\".result\").html('');
-    \$('.result').append(\"Please enter a number\");
-    return false;
-  }
-  if (\$(\"#\" + cur)){
-    var rate = \$(\"#\" + cur).text().split(\": \")[1];
-    if (!\$.isNumeric(rate)){
-      \$(\".result\").html('');
-      \$('.result').append(\"Something wrong with the exchange rate value for this currency. Please try again later.\");
-      return false;
-    }
-  } else {
-    \$(\".result\").html('');
-    \$('.result').append(\"And error occured while converting the value.\");
-    return false;
-  }
-  var result = Number.parseFloat(input / rate).toFixed(2);
-  \$(\".result\").html('');
-  \$('.result').append(result);
-  return true;
-}
-
-
-
-clearInterval(ratesAjax);
-
-var source = \$('h2').attr('class');
-
-\$('.convertVal').keyup(function(){
-  convertCur();
-});
-
-\$(\".cur\").change(function() {
-  convertCur();
-});
-
-
-getRates();
-
-var ratesAjax = setInterval(function() {
-  getRates();
-}, 5000);
-
-function getRates() {
-  \$.ajax({
-    url: '/api?rates=' + source,
-    success: function(data) {
-      updateRates(data);
-      return true;
-    },
-    error: function(){
-      console.log('Error fetching currency data. Please check the logs.');
-      return false;
-    }
-  });
-}
-
-function updateRates(rates){
-    for (var key in rates) {
-        var value = key + ': ' + rates[key];
-        var curClass = '#' + key;
-        if (\$(curClass)[0]){
-          \$(curClass).html('');
-          \$(curClass).append(value);
-        } else {
-          if (rates[key]){
-            var newCur = '<li id=\"' + key + '\" class=\"cur\">' + key + \": \" + rates[key] + \"</li>\";
-            \$('.curList').append(newCur);
-            \$('select').append('<option value=\"' + key + ' \">' + key + '</option>');
-          } else {
-            var newCur = '<li id=\"' + key + '\">' + key + \": Error occured while fetching the value. Check if it exists on source</li>\";
-            \$('.curList').append(newCur);
-          }
+                ";
         }
-    }
-    return true;
-}
-
-
-</script>
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['key'], $context['rate'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 46
+        echo "                <option value=\"UAH\">UAH</option>
+            </select>
+            </div>
+            <div class=\"m-more\">
+            <div><em>Convertion result:</em></div>
+            <div class=\"d-flex justify-content-center\"><input class=\"result\" disabled></div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script src=\"js/converter.js\"></script>
+<script src=\"js/rates-ajax.js\"></script>
 ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
@@ -191,9 +157,9 @@ function updateRates(rates){
 
         echo "<h2 class=\"";
         echo twig_escape_filter($this->env, (isset($context["slug"]) || array_key_exists("slug", $context) ? $context["slug"] : (function () { throw new RuntimeError('Variable "slug" does not exist.', 1, $this->source); })()), "html", null, true);
-        echo "\">";
+        echo "\" style=\"display:none;\">";
         echo twig_escape_filter($this->env, (isset($context["title"]) || array_key_exists("title", $context) ? $context["title"] : (function () { throw new RuntimeError('Variable "title" does not exist.', 1, $this->source); })()), "html", null, true);
-        echo "<h2>";
+        echo "</h2>";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
 
@@ -211,119 +177,69 @@ function updateRates(rates){
 
     public function getDebugInfo()
     {
-        return array (  187 => 1,  91 => 20,  80 => 17,  77 => 16,  73 => 15,  67 => 11,  54 => 8,  51 => 7,  47 => 6,  41 => 2,  39 => 1,);
+        return array (  153 => 1,  133 => 46,  122 => 43,  119 => 42,  115 => 41,  102 => 30,  91 => 27,  88 => 26,  84 => 25,  69 => 12,  56 => 9,  53 => 8,  49 => 7,  42 => 2,  39 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("{% block title %}<h2 class=\"{{ slug }}\">{{ title }}<h2>{% endblock %}
+        return new Source(" {% block title %}<h2 class=\"{{ slug }}\" style=\"display:none;\">{{ title }}</h2>{% endblock %}
+
+<div class=\"container row\">
+    <div class=\"col\">
+    <h4>Current Exchange Rates:</h4>
+    <ul class=\"curList\">
+        {% for key, rate in rates %}
+
+            <li class=\"cur\" id=\"{{ key }}\">{{ key }}: {{ rate }}</li>
+
+        {% endfor %}
+    </ul>
+    </div>
+
+    <div class=\"col converter text-center\">
+        <h4>Converter</h4> 
+        <div class=\"row\">
+            <div class=\"col\">
+            <div class=\"m-more\">
+            <div><em>The currency I want to convert:</em></div>
+            <select class=\"toConvert\" name=\"cur\">
+                <option value=\"UAH\">UAH</option>
 
 
-<h4>Current Exchange Rates:</h4>
-<ul class=\"curList\">
-    {% for key, rate in rates %}
+                {% for key, rate in rates %}
 
-        <li class=\"cur\" id=\"{{ key }}\">{{ key }}: {{ rate }}</li>
+                    <option value=\"{{ key }}\">{{ key }}</option>
 
-    {% endfor %}
-</ul>
-<p>Convert <input class=\"convertVal\" type=\"text\" name=\"val\" placeholder=\"1\"> UAH to
-  <select class=\"cur\" name=\"cur\">
+                {% endfor %}
+            </select>
+            </div>
+            <div class=\"m-more\">
+            <div><em>Amount to convert:</em></div>
+            <div class=\"d-flex justify-content-center\"><input class=\"convertVal\" type=\"text\" name=\"val\" placeholder=\"100\"></div>
+            </div>
+        </div>
+        <div class=\"col\">
+            <div class=\"m-more\">
+            <div><em>The currency to convert into:</em></div>
+            <select class=\"cur\" name=\"cur\">
+                {% for key, rate in rates %}
 
-    {% for key, rate in rates %}
+                    <option value=\"{{ key }}\">{{ key }}</option>
 
-        <option value=\"{{ key }}\">{{ key }}</option>
-
-    {% endfor %}
-  </select> :
-<div class=\"result\"></div>
-<script>
-
-
-function convertCur(){
-  var input = \$(\".convertVal\").val();
-  var cur = \$( \".cur option:selected\" ).text();
-  if (!\$.isNumeric(input)){
-    \$(\".result\").html('');
-    \$('.result').append(\"Please enter a number\");
-    return false;
-  }
-  if (\$(\"#\" + cur)){
-    var rate = \$(\"#\" + cur).text().split(\": \")[1];
-    if (!\$.isNumeric(rate)){
-      \$(\".result\").html('');
-      \$('.result').append(\"Something wrong with the exchange rate value for this currency. Please try again later.\");
-      return false;
-    }
-  } else {
-    \$(\".result\").html('');
-    \$('.result').append(\"And error occured while converting the value.\");
-    return false;
-  }
-  var result = Number.parseFloat(input / rate).toFixed(2);
-  \$(\".result\").html('');
-  \$('.result').append(result);
-  return true;
-}
-
-
-
-clearInterval(ratesAjax);
-
-var source = \$('h2').attr('class');
-
-\$('.convertVal').keyup(function(){
-  convertCur();
-});
-
-\$(\".cur\").change(function() {
-  convertCur();
-});
-
-
-getRates();
-
-var ratesAjax = setInterval(function() {
-  getRates();
-}, 5000);
-
-function getRates() {
-  \$.ajax({
-    url: '/api?rates=' + source,
-    success: function(data) {
-      updateRates(data);
-      return true;
-    },
-    error: function(){
-      console.log('Error fetching currency data. Please check the logs.');
-      return false;
-    }
-  });
-}
-
-function updateRates(rates){
-    for (var key in rates) {
-        var value = key + ': ' + rates[key];
-        var curClass = '#' + key;
-        if (\$(curClass)[0]){
-          \$(curClass).html('');
-          \$(curClass).append(value);
-        } else {
-          if (rates[key]){
-            var newCur = '<li id=\"' + key + '\" class=\"cur\">' + key + \": \" + rates[key] + \"</li>\";
-            \$('.curList').append(newCur);
-            \$('select').append('<option value=\"' + key + ' \">' + key + '</option>');
-          } else {
-            var newCur = '<li id=\"' + key + '\">' + key + \": Error occured while fetching the value. Check if it exists on source</li>\";
-            \$('.curList').append(newCur);
-          }
-        }
-    }
-    return true;
-}
-
-
-</script>
+                {% endfor %}
+                <option value=\"UAH\">UAH</option>
+            </select>
+            </div>
+            <div class=\"m-more\">
+            <div><em>Convertion result:</em></div>
+            <div class=\"d-flex justify-content-center\"><input class=\"result\" disabled></div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script src=\"js/converter.js\"></script>
+<script src=\"js/rates-ajax.js\"></script>
 ", "request.html.twig", "C:\\xampp\\htdocs\\converter\\templates\\request.html.twig");
     }
 }
