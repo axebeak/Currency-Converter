@@ -29,6 +29,20 @@ EUR=30.48
 
 Необходимости редактировать **.env** вручную нет, поскольку в **Settings** табе есть опция добавления новых валют и редактирование значений и названий старых. Кнопка **Add** добавит больше полей для ввода новых валют к списку, а кнопка **Submit** сделает Ajax-запрос с обновленными значениями валют на сервер.  Класс **SettingsHelper** перегенерирует **.env** файл с новыми значениями - при условии, что эти значения будут валидными.
 
+Пример **.env** файла, который должен лежать в корне приложения:
+
+```
+#Currencies must be defined here, separated by commas:
+CURRENCIES=USD,EUR
+#Definitions of currencies for local file method:
+USD=27.09
+EUR=30.48
+#API for currency exchange rates:
+API_LINK=https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5
+```
+
+Для работы на серверах с Apache, необходимо переименовать htaccess.txt в .htaccess.
+
 **External API** вытянет значения валют с API, определяющегося по переменной *API_LINK* в .env. По умолчанию, он настроен использовать API [Приват Банка](https://api.privatbank.ua/#p24/exchange).
 
 **Random** генерирует новые курсы валют. Валюты хранятся в куках в течении 15 секунд. После истечения их срока, значения генерируются по-новой.
