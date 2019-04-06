@@ -23,7 +23,7 @@ class MainController extends AbstractController {
     private $APIHelper;
 
     private $randomHelper;
-    
+
     private $settingsHelper;
 
     private $currencies;
@@ -40,7 +40,11 @@ class MainController extends AbstractController {
     * @Route("/")
     */
     public function showDefault(){
-        return $this->render('base.html.twig');
+        return $this->render('base.html.twig', [
+          'default' => $this->renderView('home.html.twig',[
+            'API_LINK' => getenv('API_LINK')
+          ]),
+        ]);
     }
 
     /**
@@ -70,6 +74,10 @@ class MainController extends AbstractController {
 
     public function showPage($slug){
         switch ($slug){
+            case 'home':
+                return $this->render('home.html.twig',[
+                  'API_LINK' => getenv('API_LINK')
+                ]);
             case 'local-file':
                 $title = 'Local File';
                 $rates = $this->fileHelper->rates;
@@ -109,7 +117,7 @@ class MainController extends AbstractController {
               throw new \Exception("Provided source for currency exchange not found. Please use 'local', 'api', or 'random'.");
       }
     }
-    
+
     public function createCur(string $cur){
         $curArray = json_decode($cur, true);
         if (json_last_error() === JSON_ERROR_NONE) {
@@ -117,7 +125,7 @@ class MainController extends AbstractController {
         }
         return false;
     }
-    
+
     public function convert(int $val, string $cur, string $source){
         switch ($source){
             case 'local-file':

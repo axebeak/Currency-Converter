@@ -65,7 +65,10 @@ class __TwigTemplate_c9df2e9978f6e056476ebe808e5e6b90fab81ee450f5098fc6ada78ec4b
       <main class=\"container\">
       <div class=\"lds-ring\"><div></div><div></div><div></div><div></div></div>
       <div id=\"main\">
-        Currency converter. Please select an option above;
+        ";
+        // line 27
+        echo (isset($context["default"]) || array_key_exists("default", $context) ? $context["default"] : (function () { throw new RuntimeError('Variable "default" does not exist.', 27, $this->source); })());
+        echo "
       </div>
       </main>
         ";
@@ -129,9 +132,14 @@ class __TwigTemplate_c9df2e9978f6e056476ebe808e5e6b90fab81ee450f5098fc6ada78ec4b
         return "base.html.twig";
     }
 
+    public function isTraitable()
+    {
+        return false;
+    }
+
     public function getDebugInfo()
     {
-        return array (  119 => 31,  113 => 30,  102 => 7,  96 => 6,  84 => 5,  75 => 34,  73 => 30,  53 => 12,  51 => 6,  47 => 5,  41 => 1,);
+        return array (  122 => 31,  116 => 30,  105 => 7,  99 => 6,  87 => 5,  78 => 34,  76 => 30,  70 => 27,  53 => 12,  51 => 6,  47 => 5,  41 => 1,);
     }
 
     public function getSourceContext()
@@ -162,7 +170,7 @@ class __TwigTemplate_c9df2e9978f6e056476ebe808e5e6b90fab81ee450f5098fc6ada78ec4b
       <main class=\"container\">
       <div class=\"lds-ring\"><div></div><div></div><div></div><div></div></div>
       <div id=\"main\">
-        Currency converter. Please select an option above;
+        {{ default|raw }}
       </div>
       </main>
         {% block javascripts %}
