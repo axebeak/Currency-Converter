@@ -43,13 +43,13 @@ class APIHelper {
         $response = curl_exec($ch);
 
         return json_decode($response);
-
     }
 
     public function convert(int $val, string $cur) {
       if (!in_array($cur, $this->currencies)){
         throw new \Exception("Uknown currency");
       }
+
       return number_format((float)$val / $this->rates[$cur], 2, '.', '');
     }
 

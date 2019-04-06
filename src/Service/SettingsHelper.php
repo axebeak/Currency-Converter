@@ -31,6 +31,7 @@ class SettingsHelper {
                 throw new \Exception('Can\'t set UAH - it\'s already a base currency');
             }
         }
+
         return true;
     }
 
@@ -61,6 +62,7 @@ class SettingsHelper {
                 file_put_contents($this->ENV, $line.PHP_EOL, FILE_APPEND);
             }
         }
+        
         return true;
     }
 }

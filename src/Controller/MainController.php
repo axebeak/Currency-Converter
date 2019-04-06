@@ -40,9 +40,10 @@ class MainController extends AbstractController {
     * @Route("/")
     */
     public function showDefault(){
+
         return $this->render('base.html.twig', [
           'default' => $this->renderView('home.html.twig',[
-            'API_LINK' => getenv('API_LINK')
+            'api_link' => getenv('API_LINK')
           ]),
         ]);
     }
@@ -76,7 +77,7 @@ class MainController extends AbstractController {
         switch ($slug){
             case 'home':
                 return $this->render('home.html.twig',[
-                  'API_LINK' => getenv('API_LINK')
+                  'api_link' => getenv('API_LINK')
                 ]);
             case 'local-file':
                 $title = 'Local File';
@@ -98,6 +99,7 @@ class MainController extends AbstractController {
             default:
                 throw new \Exception("'".$slug."' link not found, please use one of the following: 'local-file', 'external-api' or 'random'");
         }
+
         return $this->render('request.html.twig', [
             'title' => $title,
             'rates' => $rates,
@@ -123,6 +125,7 @@ class MainController extends AbstractController {
         if (json_last_error() === JSON_ERROR_NONE) {
             return $this->settingsHelper->initiate($curArray);
         }
+        
         return false;
     }
 

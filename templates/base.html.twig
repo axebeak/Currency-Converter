@@ -19,17 +19,17 @@
           <li id="random-item" class="nav-item"><a class="nav-link" href="javascript:void(0)">Random</a></li>
           <li id="settings-item" class="nav-item"><a class="nav-link" href="javascript:void(0)"><i class="fas fa-cog"></i> Settings</a></li>
         </nav>
-        <span class="row selector"></div>
+        <span class="row selector"></span>
       </header>
       <main class="container">
-      <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-      <div id="main">
-        {{ default|raw }}
-      </div>
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <div id="main">
+          {{ default|raw }}
+        </div>
       </main>
-        {% block javascripts %}
-           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-           <script src="js/menu.js"></script>
-        {% endblock %}
+      {% block javascripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="js/menu.js"></script>
+      {% endblock %}
     </body>
 </html>

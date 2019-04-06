@@ -49,6 +49,7 @@ class RandomHelper {
       $cookie = new Cookie('rates', json_encode($this->rates), strtotime('now + 15 seconds'));
       $this->response->headers->setCookie($cookie);
       $this->response->send();
+
       return true;
     }
 
@@ -56,6 +57,7 @@ class RandomHelper {
       if (!in_array($cur, $this->currencies)){
         throw new \Exception("Uknown currency");
       }
+      
       return number_format((float)$val / $this->rates[$cur], 2, '.', '');
     }
 }

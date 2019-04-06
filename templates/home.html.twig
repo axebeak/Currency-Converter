@@ -8,7 +8,7 @@
   <h5 class="text-center">Local File</h5>
   <p>The local file source is using the values defined in the .env file as exchange rates for the currencies. So, for example, if you have <span class="variable">CURRENCIES</span> set to <span class="variable">USD,EUR</span>, you'll need to define <span class="variable">USD</span> and <span class="variable">EUR</span> variables as well. Otherwise, the FileHelper class will throw an exception. The 'Settings' menu allows you to define the values for new currencies as well.</p>
   <h5 class="text-center">External API</h5>
-  <p>This method fetches the currency exchange rates from API. By default, it uses a PrivatBank API for this. The API is defined in <span class="variable">API_LINK</span> variable in the .env file. Currently, the API link is {{ API_LINK }}.</p>
+  <p>This method fetches the currency exchange rates from API. By default, it uses a PrivatBank API for this. The API is defined in <span class="variable">API_LINK</span> variable in the .env file. Currently, the API link is {{ api_link }}.</p>
   <h5 class="text-center">Random</h5>
   <p class="mb-4">This type randomizes the exchange rates for the currencies set in <span class="variable">CURRENCIES</span> variable in the .env file. The random values for the currencies are stored in cookies with expiration set to 15 seconds. After the cookie expires, the new values are randomly generated.</p>
 </div>

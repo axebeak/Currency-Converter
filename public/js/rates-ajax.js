@@ -8,13 +8,13 @@ var ratesAjax = setInterval(function() {
 
 function getRates() {
   $.ajax({
-    url: '/api?rates=' + source,
+    url: "/api?rates=" + source,
     success: function(data) {
       updateRates(data);
       return data;
     },
     error: function(){
-      console.log('Error fetching currency data. Please check the logs.');
+      console.log("Error fetching currency data. Please check the logs.");
       return false;
     }
   });
@@ -22,19 +22,21 @@ function getRates() {
 
 function updateRates(rates){
     for (var key in rates) {
-        var value = key + ': ' + rates[key];
-        var curClass = '#' + key;
+        var value = key + ": " + rates[key];
+        var curClass = "#" + key;
         if ($(curClass)[0]){
-          $(curClass).html('');
+          $(curClass).html("");
           $(curClass).append(value);
         } else {
           if (rates[key]){
-            var newCur = '<li id="' + key + '" class="cur">' + key + ": " + rates[key] + "</li>";
-            $('.curList').append(newCur);
-            $('select').append('<option value="' + key + ' ">' + key + '</option>');
+            var newCur = "<li id='" + key + "' class='cur'>" + key +
+             ": " + rates[key] + "</li>";
+            $(".curList").append(newCur);
+            $("select").append("<option value='" + key + "'>" + key + '</option>');
           } else {
-            var newCur = '<li id="' + key + '">' + key + ": Error occured while fetching the value. Check if it exists on source</li>";
-            $('.curList').append(newCur);
+            var newCur = "<li id='" + key + "'>" + key +
+            ": Error occured while fetching the value. Check if it exists on source</li>";
+            $(".curList").append(newCur);
           }
         }
     }

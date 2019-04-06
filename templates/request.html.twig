@@ -1,58 +1,61 @@
- {% block title %}<h2 class="{{ slug }}" style="display:none;">{{ title }}</h2>{% endblock %}
+{% block title %}<h2 class="{{ slug }}" style="display:none;">{{ title }}</h2>{% endblock %}
 
 <div class="container row">
-    <div class="col">
+  <div class="col">
     <h4>Current Exchange Rates:</h4>
     <ul class="curList">
-        {% for key, rate in rates %}
+      {% for key, rate in rates %}
 
-            <li class="cur" id="{{ key }}">{{ key }}: {{ rate }}</li>
+        <li class="cur" id="{{ key }}">{{ key }}: {{ rate }}</li>
 
-        {% endfor %}
+      {% endfor %}
     </ul>
-    </div>
+  </div>
 
-    <div class="col converter text-center">
-        <h4>Converter</h4> 
-        <div class="row">
-            <div class="col">
-            <div class="m-more">
-            <div><em>The currency I want to convert:</em></div>
-            <select class="toConvert" name="cur">
-                <option value="UAH">UAH</option>
+  <div class="col converter text-center">
+    <h4>Converter</h4>
+    <div class="row">
+      <div class="col">
+        <div class="m-more">
+          <div><em>The currency I want to convert:</em></div>
+          <select class="toConvert" name="cur">
+            <option value="UAH">UAH</option>
 
+            {% for key, rate in rates %}
 
-                {% for key, rate in rates %}
+              <option value="{{ key }}">{{ key }}</option>
 
-                    <option value="{{ key }}">{{ key }}</option>
+            {% endfor %}
 
-                {% endfor %}
-            </select>
-            </div>
-            <div class="m-more">
+          </select>
+        </div>
+        <div class="m-more">
             <div><em>Amount to convert:</em></div>
             <div class="d-flex justify-content-center"><input class="convertVal" type="text" name="val" placeholder="100"></div>
-            </div>
         </div>
-        <div class="col">
-            <div class="m-more">
-            <div><em>The currency to convert into:</em></div>
-            <select class="cur" name="cur">
-                {% for key, rate in rates %}
+      </div>
+      <div class="col">
+        <div class="m-more">
+          <div><em>The currency to convert into:</em></div>
+          <select class="cur" name="cur">
 
-                    <option value="{{ key }}">{{ key }}</option>
+            {% for key, rate in rates %}
 
-                {% endfor %}
-                <option value="UAH">UAH</option>
-            </select>
-            </div>
-            <div class="m-more">
-            <div><em>Convertion result:</em></div>
-            <div class="d-flex justify-content-center"><input class="result" disabled></div>
-            </div>
+              <option value="{{ key }}">{{ key }}</option>
+
+            {% endfor %}
+
+            <option value="UAH">UAH</option>
+          </select>
         </div>
+        <div class="m-more">
+          <div><em>Convertion result:</em></div>
+          <div class="d-flex justify-content-center"><input class="result" disabled></div>
         </div>
+      </div>
     </div>
+  <div class="converter-output"></div>
+  </div>
 </div>
 <script src="js/converter.js"></script>
 <script src="js/rates-ajax.js"></script>

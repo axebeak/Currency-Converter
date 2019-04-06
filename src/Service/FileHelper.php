@@ -26,6 +26,7 @@ class FileHelper {
       if (!in_array($cur, $this->currencies)){
         throw new \Exception("Uknown currency");
       }
+      
       return number_format((float)$val / $this->rates[$cur], 2, '.', '');
     }
 }
