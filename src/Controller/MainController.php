@@ -66,19 +66,25 @@ class MainController extends AbstractController {
         if ($request->query->has('currencies')){
             if ($this->createCur($request->get('currencies'))){
                 return new JsonResponse(["success" => true]);
-            } else {
-                throw new \Exception("Error processing the request. Please check the logs.");
             }
+            throw new \Exception(sprintf("Error processing the request. Please check the logs."));
         }
-        throw new \Exception("Uknown parameters.");
+        throw new \Exception(sprintf("Uknown parameters."));
     }
 
     public function showPage($slug){
+        if ('home' === $slug){
+          return $this->render('home.html.twig',[
+            'api_link' => getenv('API_LINK')
+          ]);
+        }
+        if ('settings' === $slug){
+          return $this->render('settings.html.twig', [
+              'title' => 'Settings',
+              'currencies' => $this->currencies,
+              'rates' => $this->fileHelper->rates]);
+        }
         switch ($slug){
-            case 'home':
-                return $this->render('home.html.twig',[
-                  'api_link' => getenv('API_LINK')
-                ]);
             case 'local-file':
                 $title = 'Local File';
                 $rates = $this->fileHelper->rates;
@@ -91,13 +97,8 @@ class MainController extends AbstractController {
                 $title = 'Random Values';
                 $rates = $this->randomHelper->rates;
                 break;
-            case 'settings':
-                return $this->render('settings.html.twig', [
-                    'title' => 'Settings',
-                    'currencies' => $this->currencies,
-                    'rates' => $this->fileHelper->rates]);
             default:
-                throw new \Exception("'".$slug."' link not found, please use one of the following: 'local-file', 'external-api' or 'random'");
+                throw new \Exception(sprintf("'%s' link not found, please use one of the following: 'local-file', 'external-api' or 'random'", $slug));
         }
 
         return $this->render('request.html.twig', [
@@ -108,37 +109,37 @@ class MainController extends AbstractController {
     }
 
     public function getRates(string $source){
-      switch ($source){
-          case 'local-file':
-              return $this->fileHelper->rates;
-          case 'external-api':
-              return $this->APIHelper->rates;
-          case 'random':
-              return $this->randomHelper->rates;
-          default:
-              throw new \Exception("Provided source for currency exchange not found. Please use 'local', 'api', or 'random'.");
+        if ('local-file' === $source){
+          return $this->fileHelper->rates;
+        }
+        if ('external-api' === $source){
+          return $this->APIHelper->rates;
+        }
+        if ('random' === $source){
+          return $this->randomHelper->rates;
+        }
+        throw new \Exception(sprintf("Provided source for currency exchange not found: '%s'. Please use 'local', 'api', or 'random'.", $source));
       }
-    }
 
     public function createCur(string $cur){
         $curArray = json_decode($cur, true);
         if (json_last_error() === JSON_ERROR_NONE) {
             return $this->settingsHelper->initiate($curArray);
         }
-        
+
         return false;
     }
 
     public function convert(int $val, string $cur, string $source){
-        switch ($source){
-            case 'local-file':
-                return $this->fileHelper->convert($val, $cur);
-            case 'external-api':
-                return $this->APIHelper->convert($val, $cur);
-            case 'random':
-                return $this->randomHelper->convert($val, $cur);
-            default:
-                throw new \Exception("Provided source for currency exchange not found. Please use 'local', 'api', or 'random'.");
+        if ('local-file' === $source){
+            return $this->fileHelper->convert($val, $cur);
         }
+        if ('external-api' === $source){
+            return $this->APIHelper->convert($val, $cur);
+        }
+        if ('random' === $source){
+            return $this->randomHelper->convert($val, $cur);
+        }
+        throw new \Exception(sprintf("Provided source for currency exchange not found: '%s'. Please use 'local', 'api', or 'random'.", $source));
     }
 }

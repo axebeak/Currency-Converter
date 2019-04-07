@@ -4,11 +4,11 @@ namespace App\Service;
 
 class APIHelper {
 
+    public $rates;
+
     private $API;
 
     private $currencies;
-
-    public $rates;
 
     public function __construct($API, $currencies, $rates = []){
         $this->API = $API;
@@ -34,6 +34,14 @@ class APIHelper {
         $this->rates = $rates;
     }
 
+    public function convert(int $val, string $cur) {
+      if (!in_array($cur, $this->currencies)){
+        throw new \Exception(sprintf("Uknown currency: '%s'", $cur));
+      }
+
+      return number_format((float)$val / $this->rates[$cur], 2, '.', '');
+    }
+
     private function fetchRates() {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->API);
@@ -43,14 +51,6 @@ class APIHelper {
         $response = curl_exec($ch);
 
         return json_decode($response);
-    }
-
-    public function convert(int $val, string $cur) {
-      if (!in_array($cur, $this->currencies)){
-        throw new \Exception("Uknown currency");
-      }
-
-      return number_format((float)$val / $this->rates[$cur], 2, '.', '');
     }
 
 }

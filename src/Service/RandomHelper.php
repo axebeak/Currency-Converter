@@ -8,11 +8,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RandomHelper {
 
+    public $rates;
+
     private $response;
 
     private $currencies;
-
-    public $rates;
 
     public function __construct($rates = [], $currencies){
         $this->response = new Response;
@@ -45,19 +45,19 @@ class RandomHelper {
         }
     }
 
-    public function setRatesCookie(){
+    public function convert(int $val, string $cur) {
+      if (!in_array($cur, $this->currencies)){
+        throw new \Exception(sprintf("Uknown currency: '%s'", $cur));
+      }
+
+      return number_format((float)$val / $this->rates[$cur], 2, '.', '');
+    }
+
+    private function setRatesCookie(){
       $cookie = new Cookie('rates', json_encode($this->rates), strtotime('now + 15 seconds'));
       $this->response->headers->setCookie($cookie);
       $this->response->send();
 
       return true;
-    }
-
-    public function convert(int $val, string $cur) {
-      if (!in_array($cur, $this->currencies)){
-        throw new \Exception("Uknown currency");
-      }
-      
-      return number_format((float)$val / $this->rates[$cur], 2, '.', '');
     }
 }

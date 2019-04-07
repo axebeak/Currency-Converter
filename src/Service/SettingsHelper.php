@@ -24,18 +24,18 @@ class SettingsHelper {
     public function checkValues(){
         foreach ($this->currencies as $currency => $value){
             $indexes = array_keys($this->currencies, $currency);
-            if (count($indexes) > 1){
-                throw new \Exception($currency." added as a value more then once!");
+            if (1 < count($indexes)){
+                throw new \Exception(sprintf("'%s' added as a value more then once!", $currency));
             }
-            if ($currency == 'UAH'){
-                throw new \Exception('Can\'t set UAH - it\'s already a base currency');
+            if ('UAH' === $currency){
+                throw new \Exception(sprintf('Can\'t set UAH - it\'s already a base currency'));
             }
         }
 
         return true;
     }
 
-    public function generateEnv(){
+    private function generateEnv(){
         $envCurrencies = 'CURRENCIES=';
         foreach ($this->currencies as $currency => $value){
             $envCurrencies = $envCurrencies.$currency.',';
@@ -62,7 +62,7 @@ class SettingsHelper {
                 file_put_contents($this->ENV, $line.PHP_EOL, FILE_APPEND);
             }
         }
-        
+
         return true;
     }
 }
